@@ -43,3 +43,5 @@ Everything here is original work. There is no Rockstar Games logo, wordmark, off
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+Round 2 (19 Nov 2026): Anton font re-issued in a fresh recorded session; no app change.

@@ -1,47 +1,72 @@
-# Vice Lights Cover Studio
+[![make.fun](https://make.fun/badge/gta6-cover-art-01.svg)](https://make.fun/c/gta6-cover-art-01/)
+[![rank](https://make.fun/badge/gta6-cover-art-01/intan151/makefun-gta6-cover-art-01/rank.svg)](https://make.fun/c/gta6-cover-art-01/)
+[![reward](https://make.fun/badge/gta6-cover-art-01/intan151/makefun-gta6-cover-art-01/reward.svg)](https://make.fun/c/gta6-cover-art-01/)
 
-[![make.fun](https://make.fun/badge/gta6-cover-art-01.svg)](https://make.fun/bounty/gta6-cover-art-01)
-[![rank](https://make.fun/badge/gta6-cover-art-01/intan151/makefun-gta6-cover-art-01/rank.svg)](https://make.fun/bounty/gta6-cover-art-01)
-[![reward](https://make.fun/badge/gta6-cover-art-01/intan151/makefun-gta6-cover-art-01/reward.svg)](https://make.fun/bounty/gta6-cover-art-01)
+# Palm Sunset Cover Studio
 
-An offline web app that turns your own photo and a caption into GTA-style poster cover art — multi-panel layouts, a Vice City sunset or neon colour grade, bold condensed lettering — and exports it as a PNG to share. Made for the [Make GTA 6 Cover Art bounty](https://make.fun/bounty/gta6-cover-art-01) on make.fun.
+A GTA-style cover art maker for the [make.fun gta6-cover-art-01 bounty](https://make.fun/c/gta6-cover-art-01/).
+Turn your photo and a caption into multi-panel poster cover art with a Vice City
+neon-sunset grade — fully offline in your browser, exported as a PNG ready to post.
 
-## How it works
+## What it does
 
-1. **Add photos** from your machine (or try the two built-in samples). Photos are read locally and never uploaded anywhere.
-2. **Pick a layout** — Solo, Split Duo, Hero Trio, or Quad Grid — and click a photo in the strip to place it in the selected panel. Click a panel to select it, drag the photo to move it, use the zoom slider to crop it. One photo can fill every panel, or each panel can hold a different one.
-3. **Pick a colour grade** — Vice Sunset, Neon Nights, Palm Dusk, or Midnight Noir.
-4. **Write the caption** — big condensed Anton lettering with a dark outline — plus an optional neon script subtitle, size and top/bottom placement.
-5. **Export a PNG** in 1080 × 1080, 1080 × 1350, or 1920 × 1080.
+- **Any photo** — upload your own photo into any panel, or use the built-in
+  sample sunset photo. Drag a photo to reposition it, scroll to zoom it.
+- **Multi-panel covers** — three layouts: Trio (three tall panels), Hero + Duo
+  (one big panel over two), and Four Grid (2×2). One photo can fill every panel
+  with a different crop, or each panel can hold its own photo.
+- **Bold caption lettering** — a big condensed title (Anton) with a neon pink
+  drop and teal echo, plus a script subtitle (Pacifico) in gold.
+- **Vice City sunset grade** — warm orange-to-pink wash, teal shadows, a retro
+  slatted sun, skyline strip and stars, with a grade-strength slider.
+- **One-click export** — PNG at 1080 × 1080, 1080 × 1350, or 1920 × 1080.
 
-## Run it
-
-No build step, no network. Serve `app/` with any static server and open it in desktop Chrome:
+## Try it
 
 ```sh
-node serve.ts   # serves app/ on http://localhost:8080
+node serve.ts
+# open http://localhost:8080
 ```
 
-Or open `app/index.html` through any static file server. The app's fonts (Anton and Pacifico, both under the SIL Open Font License — see `app/fonts/OFL-Anton.txt` and `app/fonts/OFL-Pacifico.txt`) and sample photos are all files under `app/`, so it works fully offline.
+No build step, no network: `app/` is plain static files (HTML + CSS + ES modules),
+every font and image it loads lives under `app/`, and photos are read on your own
+machine — nothing is ever uploaded.
+
+## Hand it in
+
+```sh
+mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
+```
+
+`main.ts` (Node 22+, standard library only) copies `app/` and `screenshots/` to
+the output directory and writes `dossier.json` with the kit's vendored
+`buildDossier` library (`vendor/makefun-app.ts`).
 
 ## Originality
 
-Everything here is original work. There is no Rockstar Games logo, wordmark, official artwork, character, or font anywhere in the app. The display typefaces are Anton and Pacifico, shipped under the SIL Open Font License, and the two sample photos (`app/samples/`) are the kit's AI-made samples, free to use.
+All artwork and code are original. No Rockstar Games logo, wordmark, official
+artwork, character, or font appears anywhere. The title font Anton and the script
+font Pacifico are licensed under the SIL Open Font License (texts in
+`app/fonts/`). The sample photo `app/samples/sunset-boulevard.jpg` is original
+artwork generated for this entry — it shows no real person.
 
-## Files
+## Layout
 
-- `main.ts` — the Node 22 entrypoint; copies `app/` and `screenshots/` to the output directory and writes `dossier.json`.
-- `app/index.html`, `app/style.css` — the editor page and its styles.
-- `app/src/poster.js` — the cover renderer (panels, grades, lettering).
-- `app/src/main.js` — the editor wiring (photos, drag-to-crop, export).
-- `app/src/shots.js` — fixed scenes for screenshots (`?shot=editor` / `?shot=cover`).
-- `app/fonts/` — Anton and Pacifico, SIL OFL.
-- `app/samples/` — pier and boulevard sample photos.
-- `screenshots/` — the cover and the editor, rendered by the app itself.
-- `vendor/makefun-app.ts` — the kit's make.fun library, unchanged.
+```
+app/
+  index.html            editor page
+  style.css             editor chrome
+  src/
+    main.js             editor state, uploads, drag/zoom, export
+    cover.js            cover renderer: layouts, grade, lettering
+  fonts/                Anton + Pacifico (OFL) + licence texts
+  samples/              built-in sample photo
+screenshots/            real renders of the app and its exports
+main.ts                 entry program (Node 22, stdlib only)
+serve.ts                local dev server
+vendor/makefun-app.ts   kit library, unchanged
+```
 
 ## License
 
 MIT — see [LICENSE](LICENSE).
-
-Round 2 (19 Nov 2026): Anton font re-issued in a fresh recorded session; no app change.

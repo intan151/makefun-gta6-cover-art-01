@@ -3,48 +3,62 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vice Coast Cover Studio — GTA-style poster covers from your photos</title>
+<title>Vice Lights Cover Studio — GTA-style poster maker</title>
 <link rel="stylesheet" href="./style.css">
 </head>
 <body>
+<header class="topbar">
+  <div>
+    <h1>Vice Lights <span>Cover Studio</span></h1>
+    <p>Your photo, a caption, and a Vice City sunset — a poster cover in three steps. Photos never leave your machine.</p>
+  </div>
+</header>
 <main class="app">
-  <section class="controls" aria-label="Cover controls">
-    <h1>Vice Coast <span>Cover Studio</span></h1>
-    <p class="tagline">Your photo + a caption, made into a multi-panel poster cover. Fully offline — photos never leave this machine.</p>
-
-    <div class="group">
-      <label class="file-label">Photos (up to 8)
+  <aside class="controls" aria-label="Cover controls">
+    <section>
+      <h2>1 · Photos</h2>
+      <label class="file-label">Add photos from your machine
         <input id="photo" type="file" accept="image/*" multiple>
       </label>
       <div class="row">
-        <button id="sample-pier" type="button">Try sample: Pier</button>
-        <button id="sample-boulevard" type="button">Try sample: Boulevard</button>
+        <button id="sample-pier" type="button">Sample: Pier</button>
+        <button id="sample-boulevard" type="button">Sample: Boulevard</button>
       </div>
-      <div id="library" class="library" aria-label="Loaded photos"></div>
-      <p id="photo-count" class="hint">No photos yet — add one, or try a sample.</p>
-    </div>
+      <div id="photo-strip" class="strip" aria-label="Loaded photos — click one to put it in the selected panel"></div>
+      <button id="fill-all" type="button">Use this photo in every panel</button>
+      <p class="hint">Click a photo above to place it in the selected panel. Click a panel on the cover to select it.</p>
+    </section>
 
-    <div class="group">
-      <span class="group-label">Layout</span>
-      <div id="layout-list" class="chips" role="group" aria-label="Panel layout"></div>
-      <span class="group-label">Panels — click a panel, then a photo</span>
-      <div id="panel-list" class="chips" role="group" aria-label="Select panel"></div>
-      <label>Zoom panel <span id="zoom-val">100%</span>
-        <input id="zoom" type="range" min="1" max="3" step="0.05" value="1">
-      </label>
-      <button id="reset-crop" type="button">Reset crop</button>
-      <p class="hint">Tip: drag the photo on the preview to move it, scroll to zoom.</p>
-    </div>
+    <section>
+      <h2>2 · Layout</h2>
+      <div class="row wrap" role="group" aria-label="Panel layout">
+        <button type="button" data-layout="solo">Solo</button>
+        <button type="button" data-layout="duo">Split Duo</button>
+        <button type="button" data-layout="trio" class="active">Hero Trio</button>
+        <button type="button" data-layout="quad">Quad Grid</button>
+      </div>
+    </section>
 
-    <div class="group">
+    <section>
+      <h2>3 · Colour grade</h2>
+      <div class="row wrap" role="group" aria-label="Colour grade">
+        <button type="button" data-grade="sunset" class="active">Vice Sunset</button>
+        <button type="button" data-grade="neon">Neon Nights</button>
+        <button type="button" data-grade="dusk">Palm Dusk</button>
+        <button type="button" data-grade="noir">Midnight Noir</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>4 · Caption</h2>
       <label>Caption
-        <input id="caption" type="text" maxlength="40" value="Sunset Heist">
+        <input id="caption" type="text" maxlength="48" value="Vice Lights">
       </label>
-      <label>Tagline
-        <input id="subcaption" type="text" maxlength="60" value="One last score in the sunshine state">
+      <label>Script subtitle
+        <input id="subtitle" type="text" maxlength="32" value="Neon Coast">
       </label>
       <label>Caption size <span id="caption-size-val">100%</span>
-        <input id="caption-size" type="range" min="0.6" max="1.6" step="0.05" value="1">
+        <input id="caption-size" type="range" min="60" max="150" value="100">
       </label>
       <label>Caption position
         <select id="caption-pos">
@@ -52,25 +66,32 @@
           <option value="top">Top</option>
         </select>
       </label>
-      <label class="check"><input id="badge" type="checkbox" checked> Show “Vice Coast” badge</label>
-    </div>
+    </section>
 
-    <div class="group">
-      <span class="group-label">Colour grade</span>
-      <div id="grade-list" class="chips" role="group" aria-label="Colour grade"></div>
-    </div>
+    <section>
+      <h2>5 · Crop the selected panel</h2>
+      <label>Zoom <span id="zoom-val">100%</span>
+        <input id="zoom" type="range" min="100" max="300" value="100">
+      </label>
+      <p class="hint" id="panel-hint">Panel 1 of 3 — drag the photo to move it, or use the zoom slider.</p>
+    </section>
 
-    <div class="group">
-      <label>Export size
-        <select id="export-size"></select>
+    <section>
+      <h2>6 · Export</h2>
+      <label>Post size
+        <select id="export-size">
+          <option value="1080x1080" selected>Square · 1080 × 1080</option>
+          <option value="1080x1350">Portrait · 1080 × 1350</option>
+          <option value="1920x1080">Wide · 1920 × 1080</option>
+        </select>
       </label>
       <button id="export" type="button" class="primary">Export PNG</button>
       <p id="status" role="status"></p>
-    </div>
-  </section>
-  <section class="preview" aria-label="Cover preview">
-    <canvas id="cover" width="620" height="620" aria-label="The cover"></canvas>
-    <p class="hint">Preview — the exported PNG is rendered at full size.</p>
+    </section>
+  </aside>
+
+  <section class="stage" aria-label="Cover preview">
+    <canvas id="preview" width="1080" height="1080" aria-label="The cover preview"></canvas>
   </section>
 </main>
 <script type="module" src="./src/main.js"></script>
